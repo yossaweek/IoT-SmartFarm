@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>IoT Sensor Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <header>
+      <h1>IoT Sensor Dashboard</h1>
+      <p>Real-time Environmental Monitoring</p>
+    </header>
+
+    <!-- Current Values -->
+    <section class="cards">
+
+      <div class="card temperature">
+        <div class="icon">🌡️</div>
+        <div class="label">Air Temperature</div>
+        <div id="airTemp" class="value">--</div>
+        <div class="unit">°C</div>
+      </div>
+
+      <div class="card humidity">
+        <div class="icon">💧</div>
+        <div class="label">Air Humidity</div>
+        <div id="airHumid" class="value">--</div>
+        <div class="unit">%</div>
+      </div>
+
+      <div class="card light">
+        <div class="icon">☀️</div>
+        <div class="label">Light Intensity</div>
+        <div id="lux" class="value">--</div>
+        <div class="unit">lux</div>
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         AI Analysis
+    ========================= -->
+
+    <section class="ai-card">
+
+      <div class="ai-header">
+        <div>
+          <h2>AI Analysis</h2>
+          <p>Statistical AI + Gemini LLM Explanation</p>
+        </div>
+        <button id="aiAnalyzeButton" class="ai-button" onclick="analyzeWithGemini()">
+          วิเคราะห์ด้วย Gemini
+        </button>
+      </div>
+
+      <div class="ai-grid">
+        <div class="ai-metric">
+          <span>Temperature Trend</span>
+          <strong id="tempTrend">--</strong>
+        </div>
+        <div class="ai-metric">
+          <span>Temperature Z-score</span>
+          <strong id="tempZScore">--</strong>
+        </div>
+        <div class="ai-metric">
+          <span>Humidity Trend</span>
+          <strong id="humidTrend">--</strong>
+        </div>
+        <div class="ai-metric">
+          <span>Humidity Z-score</span>
+          <strong id="humidZScore">--</strong>
+        </div>
+        <div class="ai-metric">
+          <span>Light Trend</span>
+          <strong id="luxTrend">--</strong>
+        </div>
+        <div class="ai-metric">
+          <span>Light Z-score</span>
+          <strong id="luxZScore">--</strong>
+        </div>
+      </div>
+
+      <div class="ai-forecast">
+        <h3>Forecast</h3>
+        <div id="aiForecast">รอการวิเคราะห์...</div>
+      </div>
+
+      <div class="gemini-result">
+        <h3>Gemini Explanation & Recommendation</h3>
+        <div id="geminiResult">
+          กดปุ่ม “วิเคราะห์ด้วย Gemini” เพื่อให้ LLM อธิบายผลการวิเคราะห์
+        </div>
+      </div>
+
+      <div id="aiError" class="ai-error"></div>
+
+    </section>
+
+    <!-- =========================
+     Device Control
+========================= -->
+
+<section class="control-card">
+
+  <h2>Device Control</h2>
+
+  <div class="control-row">
+
+    <div>
+      <div class="control-name">LED 1</div>
+      <div id="led1Status" class="control-status">
+        OFF
+      </div>
+    </div>
+
+    <button
+      id="led1Button"
+      class="control-button off"
+      onclick="toggleLED(1)"
+    >
+      OFF
+    </button>
+
+      </div>
+
+
+      <div class="control-row">
+
+        <div>
+          <div class="control-name">LED 2</div>
+          <div id="led2Status" class="control-status">
+            OFF
+          </div>
+        </div>
+
+        <button
+          id="led2Button"
+          class="control-button off"
+          onclick="toggleLED(2)"
+        >
+          OFF
+        </button>
+
+      </div>
+
+    </section>
+    <!-- Charts -->
+
+    <section class="chart-card">
+
+      <h2>Air Temperature</h2>
+
+      <div class="chart-container">
+        <canvas id="temperatureChart"></canvas>
+      </div>
+
+    </section>
+
+
+    <section class="chart-card">
+
+      <h2>Air Humidity</h2>
+
+      <div class="chart-container">
+        <canvas id="humidityChart"></canvas>
+      </div>
+
+    </section>
+
+
+    <section class="chart-card">
+
+      <h2>Light Intensity</h2>
+
+      <div class="chart-container">
+        <canvas id="luxChart"></canvas>
+      </div>
+
+    </section>
+
+
+    <footer>
+      <span>Supabase IoT Dashboard</span>
+      <span id="lastUpdate">Last update: --</span>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+</html>

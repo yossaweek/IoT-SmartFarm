@@ -1,0 +1,77 @@
+// Vercel Serverless Function
+// Gemini API key is kept on the server in GEMINI_API_KEY.
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  if (!process.env.GEMINI_API_KEY) {
+    return res.status(500).json({
+      error: "GEMINI_API_KEY is not configured in Vercel Environment Variables."
+    });
+  }
+
+  try {
+    const input = req.body?.analysis;
+
+    if (!input) {
+      return res.status(400).json({ error: "Missing analysis data" });
+    }
+
+    const prompt = `You are an IoT sensor analysis assistant.\n\nYour job is to explain statistical analysis results to a human operator.\nDo not invent sensor readings or facts that are not present in the supplied data.\nDo not recalculate the statistics unless necessary.\nClearly distinguish observed data from recommendations.\n\nSensor analysis:\n${JSON.stringify(input, null, 2)}\n\nRespond in Thai using this structure:\n1. สรุปสถานการณ์\n2. ค่าที่ควรให้ความสนใจ\n3. แนวโน้มและ Forecast\n4. Recommendation สำหรับผู้ปฏิบัติงาน\n\nKeep the answer concise and practical for an IoT dashboard.`;
+
+    const response = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": process.env.GEMINI_API_KEY
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: prompt }]
+            }
+          ],
+          generationConfig: {
+            temperature: 0.2,
+            maxOutputTokens: 700
+          }
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Gemini API error:", data);
+      return res.status(response.status).json({
+        error: data?.error?.message || "Gemini API request failed"
+      });
+    }
+
+    const text = data?.candidates?.[0]?.content?.parts
+      ?.map(part => part.text || "")
+      .join("\n")
+      .trim();
+
+    if (!text) {
+      return res.status(502).json({
+        error: "Gemini returned no text response"
+      });
+    }
+
+    return res.status(200).json({
+      text,
+      model: "gemini-3.8-flash"
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: error.message || "Server error"
+    });
+  }
+}

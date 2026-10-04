@@ -1,0 +1,307 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f8;
+  color: #1f2937;
+}
+
+.container {
+  width: 95%;
+  max-width: 1400px;
+  margin: auto;
+  padding: 30px 0;
+}
+
+header {
+  margin-bottom: 30px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+header p {
+  margin-top: 8px;
+  color: #6b7280;
+}
+
+
+/* =========================
+   Sensor Cards
+========================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+.icon {
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.value {
+  font-size: 42px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.unit {
+  color: #6b7280;
+  font-size: 16px;
+}
+
+
+/* =========================
+   Charts
+========================= */
+
+.chart-card {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.chart-card h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+}
+
+
+/* =========================
+   Footer
+========================= */
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  color: #6b7280;
+  font-size: 13px;
+  padding: 20px 5px;
+}
+
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 800px) {
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  header h1 {
+    font-size: 26px;
+  }
+
+  .value {
+    font-size: 36px;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+/* =========================
+   Device Control
+========================= */
+
+.control-card {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.control-card h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.control-row:last-child {
+  border-bottom: none;
+}
+
+.control-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.control-status {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #777;
+}
+
+.control-button {
+  width: 100px;
+  padding: 12px 20px;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.control-button.off {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.control-button.on {
+  background: #22c55e;
+  color: white;
+}
+
+.control-button:hover {
+  opacity: 0.85;
+}
+
+.control-button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+/* =========================
+   AI Analysis
+========================= */
+
+.ai-card {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.ai-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.ai-header p {
+  margin: 7px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.ai-button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  background: #4f46e5;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.ai-button:hover { opacity: 0.88; }
+.ai-button:disabled { opacity: 0.55; cursor: wait; }
+
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.ai-metric {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.ai-metric span {
+  display: block;
+  color: #6b7280;
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+.ai-metric strong {
+  font-size: 17px;
+}
+
+.ai-forecast,
+.gemini-result {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.ai-forecast h3,
+.gemini-result h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 17px;
+}
+
+#geminiResult {
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+
+.ai-error {
+  margin-top: 12px;
+  color: #b91c1c;
+}
+
+@media (max-width: 1100px) {
+  .ai-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .ai-header { flex-direction: column; align-items: stretch; }
+  .ai-grid { grid-template-columns: repeat(2, 1fr); }
+}
