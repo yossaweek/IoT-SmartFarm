@@ -1,4 +1,3 @@
-```javascript
 // Vercel Serverless Function
 // Gemini API key is kept securely in Vercel Environment Variables.
 
@@ -179,4 +178,4 @@ Do not add information that is not present in the supplied analysis.
     });
   }
 }
-```
+
